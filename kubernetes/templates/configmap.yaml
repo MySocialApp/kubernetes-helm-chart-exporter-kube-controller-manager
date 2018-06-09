@@ -5,14 +5,14 @@ metadata:
     app: "prometheus"
     chart: {{ .Chart.Name }}-{{ .Chart.Version }}
     heritage: {{ .Release.Service }}
-    prometheus: {{ .Release.Name }}
+    prometheus: {{ .Release.Namespace }}
     release: {{ .Release.Name }}
     role: alert-rules
     {{- if .Values.additionalRulesConfigMapLabels }}
 {{ toYaml .Values.additionalRulesConfigMapLabels | indent 4 }}
     {{- end }}
   name: {{ template "exporter-kube-controller-manager.name" . }}
-  namespace: observability
+  namespace: {{ .Release.Namespace }}
 data:
 {{- if .Values.prometheusRules }}
 {{- $root := . }}
